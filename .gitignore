@@ -1,5 +1,8 @@
 env
 *.env
-data/*.*
-output/*.*
+data/*
+output/*
 key.json
+
+!/data/.gitkeep
+!/output/.gitkeep
