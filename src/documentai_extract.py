@@ -16,8 +16,6 @@ from . import form_regex as fr
 
   
 
-# Load environment variables from .env file
-
 
 # Load the english NLP model
 #nlp = spacy.load("en_core_web_sm")
@@ -25,22 +23,20 @@ nlp = spacy.load('en_core_web_trf')
 
 
 
-LOCATION = 'us'
-MIME_TYPE = "application/pdf"
 
 
 
-def parse_text_from_document(file_name, PROJECT_ID,PROCESSOR_ID, INPUT_DATA_PATH, OUTPUT_DATA_PATH):
 
-    FILE_PATH = Path.cwd().joinpath(INPUT_DATA_PATH, f'{file_name}.pdf')
-    
+def parse_text_from_document(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LOCATION, MIME_TYPE):
+    """Extracting text from pdf files using google's OCR."""
+
     client = documentai.DocumentProcessorServiceClient(
         client_options=ClientOptions(api_endpoint=f'{LOCATION}-documentai.googleapis.com')
     )
 
     RESOURCE_NAME = client.processor_path(PROJECT_ID, LOCATION, PROCESSOR_ID)
 
-    with open(FILE_PATH, "rb") as image:
+    with open(INPUT_PDF_FILE, "rb") as image:
         image_content = image.read()
 
     raw_document = documentai.RawDocument(content=image_content, mime_type=MIME_TYPE)
@@ -53,7 +49,7 @@ def parse_text_from_document(file_name, PROJECT_ID,PROCESSOR_ID, INPUT_DATA_PATH
     print("Document processing complete.")
 
     # Store the extracted text into a .txt file
-    output_text_file = OUTPUT_DATA_PATH.joinpath(f"{FILE_PATH.stem}.txt")
+    output_text_file = OUTPUT_DATA_PATH.joinpath(f"{INPUT_PDF_FILE.stem}.txt")
     with open(output_text_file, "w", encoding="utf-8") as text_file:
         text_file.write(document_object.text)
 

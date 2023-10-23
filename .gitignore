@@ -3,6 +3,7 @@ env
 data/*
 output/*
 key.json
+__pycache__
 
 !/data/.gitkeep
 !/output/.gitkeep

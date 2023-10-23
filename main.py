@@ -15,18 +15,26 @@ if __name__ == "__main__":
 
     
 
-
     if sys.argv[1] == 'parse':
         # Loading the documentai credentials and Cloud project info form .env and json file.
         load_dotenv()
-        PROCESSOR_ID = os.getenv("PROCESSOR_ID") 
+        LOCATION = 'us'
+        MIME_TYPE = "application/pdf"
+        PROCESSOR_ID = os.getenv("PROCESSOR_ID")
+        INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(INPUT_DATA_PATH, f'{sys.argv[2]}.pdf') 
 
         with open(PROJECT_PATH.joinpath('key.json'), 'r') as f:
             json_file = json.load(f)
             PROJECT_ID = json_file.get('project_id')
 
 
-        parsed_text = parse_text_from_document(sys.argv[2], PROJECT_ID,PROCESSOR_ID, INPUT_DATA_PATH, OUTPUT_DATA_PATH)
+        parsed_text = parse_text_from_document(INPUT_PDF_FILE,
+                                                PROJECT_ID,
+                                                PROCESSOR_ID,
+                                                OUTPUT_DATA_PATH,
+                                                LOCATION,
+                                                MIME_TYPE
+                                               )
         print("Parsed text from PDF:")
 
 
