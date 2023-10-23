@@ -1,18 +1,5 @@
 import re
 
-# to add:  ZIP code
-
-
-"""failing patterns: 
-
-no \n or \t between fname and lname
-all patterns ends with \n
-
-
-
-""" 
-
-
 
 
 patterns = {
@@ -31,6 +18,28 @@ patterns = {
 }
 
 
+# Define fields and their variations to look for in the text
+fields = {
+        'full_name': ['Name', 'name', 'First', 'Last'],
+        'sex': ['sex', 'Sex', 'gender', 'Gender'],
+        'date_of_birth': ['Birth','birth', 'DOB'],
+        'dates': ['Date','date', 'day'],
+        'phone': ['Phone', 'Telephone', 'Contact', 'Cell'],
+        'email': ['Email','Electronic mail', 'e-mail','email', 'E-mail'],
+        'address': ['Address', 'address','residence', 'street address', ' mail'],
+        'street_address': ['Address', 'address','residence', 'street address', ' mail'],
+        'ssn': ['Social','security', 'number', 'SSN', 'ssn'],
+        'driver_license': [ 'Driver','License', 'DL', 'driver' ],
+        'marital_status': ['Marital status','Status'],
+        'price': ['price','Price', 'total','Total', '$', 'USD', 'US Dollar', 'Amount','amount', 'AMOUNT']
+     }
+
+
+# These are fields that have a strong matching pattern (they don't have to be close to the field name)
+strong_fields = ['phone','ssn','email','address',
+                 'date_of_birth', 'dates','street_address',
+                'price'
+                ]
 
 
 
@@ -44,18 +53,6 @@ patterns = {
 
 
 
-# results = {'full_name': ['Mouad Maaziz', 'Mustafa B FAKAK',  'Daytime Phone Number'],
-#             'date_of_birth': ['12/01/1975', '31/12/1999'], 
-#             'dates': ['12/01/1975', '31/12/1999', '03/01/1997', '19/10/2023'], 
-#             'phone': ['21290-3003', '555.123.4567', '21290-3003'], 
-#             'address': ['132, Hay Mohammadi,Taroudant 30000', '12, Hay Mohammadi,Taroudant 30000', '789 Elm St, Othertown, Province 98765.'],
-#             'street_address': ['789 Elm St, Othertown, Province 98765.'],
-#             'ssn': ['555-66-7777'],
-#             'price': ['$15.00', '$15.00', '$15.01', '$100', '$ 16.50', '$5,000', '$15.01', '$100', '$ 16.50', '$5,000', '$15.01',
-#                        '$100', '$ 16.50', '$5,000', '$15.01', '$100', '$ 16.50', '$5,000', '$15.00', '$15.00', '$15.00', '$15.01',
-#                         '$100', '$ 16.50', '$5,000'
-#                     ]
-#             }
 
 
 
@@ -63,29 +60,5 @@ patterns = {
 
 
 
-
-
-
-
-
-
-
-patterns2 = {
-
-    "full_name_a": r'([A-Z]+[a-z]*){1,3}(?!\W+)',
-
-    "full_name_b": r'(?:Name|name)+(?:.*)?(?:[:\s])+([A-Z]+[A-Za-z]*[ ][A-Z]+[A-Za-z]*[ ][A-Z]+[A-Za-z]*)(?=$|\n)',
-    
-    "last_name": r'(?:Last\s*Name|Surname|Family\s*Name)[:\s]?([A-Za-z\s-]+)(?=$|\n)',
-    "first_name": r'(?:First\s*Name|Given\s*Name|Forename)[:\s]?([A-Za-z\s-]+)(?=$|\n)',
-    "date_MMDDYYYY": r'^([1][12]|[0]?[1-9])[\/-]([3][01]|[12]\d|[0]?[1-9])[\/-](\d{4}|\d{2})(?=$|\n)',
-    "date_of_birth": r'(?:birth|DOB)+\n+(\d{2}/\d{2}/\d{4})(?=$|\n)',
-    "phone": r'(?:[:\s])+(\d{3}[-. ]\d{3}[-. ]\d{4})(?=$|\n)',
-    "email": r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b(?=$|\n)',
-    "address": r'(?:Address|address)+(?:\s)?(?:.*[:\s\n]+){1,4}(?:\s)?(\d{1,4}[ ,]?\w{1,10}[ ,].*[ ,]\w{1,10}[ ,]\d{5})(?=$|\n)',
-    "social_security_number": r'(?:Social|security|number|SSN)?(?:[:\s])+(\d{3}[-\s]?\d{2}[-\s]?\d{4})(?=$|\n)',
-    "driver_license": r'(Driver|License|Number|DL)\s[:\s]?([A-Z]{1,2}\d{1,8}[A-Z]?)(?=$|\n)',
-    "marital_status": r'(?:Marital\s+Status|Status)[:\s]?(\w+)(?=$|\n)',
-}
 
 

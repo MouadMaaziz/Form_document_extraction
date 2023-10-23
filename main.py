@@ -8,18 +8,17 @@ from dotenv import load_dotenv
 if __name__ == "__main__":
 
     
-    
+    load_dotenv()
     PROJECT_PATH = Path.cwd()
-    INPUT_DATA_PATH = PROJECT_PATH.joinpath('data')
-    OUTPUT_DATA_PATH = PROJECT_PATH.joinpath('output')
+    INPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("INPUT_FOLDER"))
+    OUTPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("OUTPUT_FOLDER"))
 
     
 
     if sys.argv[1] == 'parse':
         # Loading the documentai credentials and Cloud project info form .env and json file.
-        load_dotenv()
-        LOCATION = 'us'
-        MIME_TYPE = "application/pdf"
+        LOCATION = os.getenv("LOCATION")
+        MIME_TYPE = os.getenv("MIME_TYPE")
         PROCESSOR_ID = os.getenv("PROCESSOR_ID")
         INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(INPUT_DATA_PATH, f'{sys.argv[2]}.pdf') 
 
