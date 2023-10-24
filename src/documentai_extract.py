@@ -52,9 +52,13 @@ def locate_fields(fields:dict, text_lines:list):
     """Search the position field labels throughout the document"""
     field_index = {}
     for field, field_variations in fields.items():
-        field_index[field] = []
-        for variation in field_variations:
-            field_index[field].extend(text_lines.index(line) for line in text_lines if variation in line)
+        field_indices = []
+        for index, text_line in enumerate(text_lines):
+            for variation in field_variations:
+                if variation in text_line:
+                    field_indices.append(index)
+                    break
+        field_index[field]=field_indices
     return field_index
 
 
