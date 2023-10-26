@@ -27,17 +27,14 @@ if __name__ == "__main__":
             PROJECT_ID = json_file.get('project_id')
 
 
-        parsed_text = parse_text_from_document(INPUT_PDF_FILE,
-                                                PROJECT_ID,
-                                                PROCESSOR_ID,
-                                                OUTPUT_DATA_PATH,
-                                                LOCATION,
-                                                MIME_TYPE
-                                               )
-        print("Parsed text from PDF:")
-
-
-
+        parse_text_from_document(INPUT_PDF_FILE,
+                                    PROJECT_ID,
+                                    PROCESSOR_ID,
+                                    OUTPUT_DATA_PATH,
+                                    LOCATION,
+                                    MIME_TYPE
+        )
+        print(f"Parsed text from PDF:\t {sys.argv[2]}")
 
 
     if sys.argv[1] == 'extract':
@@ -46,4 +43,7 @@ if __name__ == "__main__":
 
     
     
+
+    if sys.argv[1] == 'tables':
+        pass
     

@@ -43,22 +43,56 @@ strong_fields = ['phone','ssn','email','address',
 
 
 
+"""
+
+
+{'fieldName': 'Detailed Earnings information\n(If you check this block, tell us below\nwhy you need this information.)', 'fieldValue': '☑'}
+{'fieldName': 'Yes', 'fieldValue': '☐'}
+{'fieldName': 'No', 'fieldValue': '☑'}
+{'fieldName': 'Date of Birth\n(Mo/Day/Yr)', 'fieldValue': '03/01/1997'}
+{'fieldName': 'Date', 'fieldValue': '19/10/2023'}
+{'fieldName': 'For the period(s)/year(s):', 'fieldValue': '2020-2022'}
+{'fieldName': 'Name', 'fieldValue': 'Mouad Maaziz'}
+{'fieldName': 'Number', 'fieldValue': '555-66-7777'}
+{'fieldName': 'Address', 'fieldValue': '789 Elm St, Othertown, Province 98765.'}
+{'fieldName': 'Name', 'fieldValue': 'Mustafa B FAKAK'}
+{'fieldName': 'Certified Total Earnings For Each Year.\n(Check this box only if you want the information\ncertified. Otherwise, call 1-800-772-1213 to\nrequest Form SSA-7004, Request for Earnings\nand Benefit Estimate Statement)', 'fieldValue': ''}
+{'fieldName': 'If yes, enter $15.00', 'fieldValue': 'B. $\n$300,500'}
+{'fieldName': 'Area Code) (Telephone Number)', 'fieldValue': '555.123.4567\n('}
+{'fieldName': 'City, State & Zip Code', 'fieldValue': 'Burlington, Ontario L7R 2G6'}
+{'fieldName': '(Do not print)', 'fieldValue': 'your name here\n>\nmouad.maziz@gmail.com'}
+{'fieldName': 'Mail Completed Form(s) To:', 'fieldValue': '6. Social Security Administration\nDivision of Earnings Record Operations\nP.O. Box 33003\nBaltimore Maryland 21290-3003'}
+{'fieldName': 'Ontario', 'fieldValue': ', L7R 2G6'}
+{'fieldName': 'P.O. Box', 'fieldValue': '33003'}
+{'fieldName': '300 N.', 'fieldValue': 'Greene St.'}
+{'fieldName': 'Mustafa B FAKAK', 'fieldValue': 'Name'}
 
 
 
 
+Entity Type: id
+Mention Text: 2020-2022
+Confidence: 0.6736993
 
+Entity Type: phone  / fixed / id-token
+Mention Text: 1-800-772-1213
+Confidence: 0.99956685
 
+Entity Type: page_number /public / id-token
+Mention Text: 3
+Confidence: 0.58820766
 
+Entity Type: price
+Mention Text: $ 500,000
+Confidence: 0.9680597
 
+Entity Type: price
+Mention Text: $15.00
+Confidence: 0.98402756
 
+Entity Type: price
+Mention Text: $
+$300,500
+Confidence: 0.6153776
 
-
-
-
-
-
-
-
-
-
+"""
