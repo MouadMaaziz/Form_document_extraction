@@ -1,4 +1,4 @@
-from src.documentai_extract import parse_text_from_document, extract_info
+from src.documentai_extract import parse_text_from_document, extract_info, get_tables, get_field_value
 import sys
 import os
 from pathlib import Path
@@ -13,26 +13,28 @@ if __name__ == "__main__":
     INPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("INPUT_FOLDER"))
     OUTPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("OUTPUT_FOLDER"))
 
-    
-
-    if sys.argv[1] == 'parse':
-        # Loading the documentai credentials and Cloud project info form .env and json file.
-        LOCATION = os.getenv("LOCATION")
-        MIME_TYPE = os.getenv("MIME_TYPE")
-        PROCESSOR_ID = os.getenv("PROCESSOR_ID")
-        INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(INPUT_DATA_PATH, f'{sys.argv[2]}.pdf') 
-
-        with open(PROJECT_PATH.joinpath('key.json'), 'r') as f:
+    with open(PROJECT_PATH.joinpath('key.json'), 'r') as f:
             json_file = json.load(f)
             PROJECT_ID = json_file.get('project_id')
 
+    LOCATION = os.getenv("LOCATION")
+    MIME_TYPE = os.getenv("MIME_TYPE")
+    PROCESSOR_ID = os.getenv("PROCESSOR_ID")
+    INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(INPUT_DATA_PATH, f'{sys.argv[2]}.pdf')
+    PROCESSOR_VERSION = 'rc'
+
+
+    if sys.argv[1] == 'parse':
+        # Loading the documentai credentials and Cloud project info form .env and json file.
+         
 
         parse_text_from_document(INPUT_PDF_FILE,
                                     PROJECT_ID,
                                     PROCESSOR_ID,
                                     OUTPUT_DATA_PATH,
                                     LOCATION,
-                                    MIME_TYPE
+                                    MIME_TYPE,
+                                    
         )
         print(f"Parsed text from PDF:\t {sys.argv[2]}")
 
@@ -41,9 +43,19 @@ if __name__ == "__main__":
         extracted_info = extract_info(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'-------EXTRACTED INFO---------\n\t{sys.argv[2]}')
 
-    
-    
 
     if sys.argv[1] == 'tables':
-        pass
-    
+        
+        get_tables(sys.argv[2],
+                    OUTPUT_DATA_PATH
+        )
+
+        print(f'-------EXTRACTED TABLES---------\n\t{sys.argv[2]}')
+
+    if sys.argv[1] == 'fieldvalue':
+        
+        get_field_value(sys.argv[2],
+                    OUTPUT_DATA_PATH
+        )
+
+        print(f'-------EXTRACTED Fields and Values---------\n\t{sys.argv[2]}')

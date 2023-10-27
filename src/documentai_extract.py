@@ -9,17 +9,12 @@ import pandas as pd
 
 from google.cloud import documentai_v1 as documentai
 from google.api_core.client_options import ClientOptions
-import proto
-
 
 import spacy
 import en_core_web_trf
 
 from . import form_regex as fr
 
-
-
-#nlp = spacy.load("en_core_web_sm")
 
 
 
@@ -57,6 +52,33 @@ def parse_text_from_document(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DA
     with open(output_document_dict, "w", encoding="utf-8") as json_file:
         json_file.write(json_string)
         
+
+
+def get_field_value(json_file, OUTPUT_DATA_PATH):
+
+    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
+    with open(JSON_PATH, 'r', encoding='utf-8') as t:
+        json_file = json.load(t)
+    excel_file = os.path.join(OUTPUT_DATA_PATH, f'{JSON_PATH.stem}_field_value.xlsx')
+    extracted_form_fields = []
+    field_value_df = pd.DataFrame()
+    pages = json_file['document']['pages']
+    for page in pages:
+        form_fields = page.get('formFields', [])
+        
+        for form_field in form_fields:
+            field_name = form_field.get('fieldName', {}).get('textAnchor', {}).get('content', '').strip()
+            field_value = form_field.get('fieldValue', {}).get('textAnchor', {}).get('content', '').strip()
+            
+            extracted_form_fields.append( (field_name, field_value))
+    field_value_df['Field'] = [x for x,_ in extracted_form_fields]
+    field_value_df['value'] = [x for _,x in extracted_form_fields]
+    field_value_df.to_excel(excel_file, sheet_name='field - values', index=False)
+    print(field_value_df)
+    return None
+
+
+
 
 
 def locate_fields(fields:dict, text_lines:list):
@@ -115,122 +137,64 @@ def extract_info(text_file, OUTPUT_DATA_PATH):
 
 
 
-
-
-
-
-
-
-
-from typing import Optional, Sequence
-from dotenv import load_dotenv
-from google.api_core.client_options import ClientOptions
-from google.cloud import documentai
-load_dotenv()
-PROJECT_PATH = Path.cwd()
-INPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("INPUT_FOLDER"))
-OUTPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("OUTPUT_FOLDER"))
-
-INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(INPUT_DATA_PATH, f'{sys.argv[2]}.pdf')
-with open(PROJECT_PATH.joinpath('key.json'), 'r') as f:
-            json_file = json.load(f)
-            PROJECT_ID = json_file.get('project_id')
-
-def process_document_form_sample(
-    project_id=  PROJECT_ID,
-    location=  os.getenv("LOCATION"),
-    processor_id=  os.getenv("PROCESSOR_ID"),
-    processor_version= 'rc',
-    file_path=  INPUT_PDF_FILE,
-    mime_type= os.getenv( "MIME_TYPE"),
-    output_folder = OUTPUT_DATA_PATH,
+def get_tables(json_file,
+    OUTPUT_DATA_PATH ,
 ) -> documentai.Document:
-    # Online processing request to Document AI
-    document = process_document(
-        project_id, location, processor_id, processor_version, file_path, mime_type
-    )
-
-
-    text = document.text
+ 
+    
+    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
+    with open(JSON_PATH, 'r', encoding='utf-8') as t:
+        json_file = json.load(t)
+    
+    document = json_file['document']
+    text = document['text']
     print(f"Full document text: {repr(text)}\n")
-    print(f"There are {len(document.pages)} page(s) in this document.")
+    print(f"There are {len(document['pages'])} page(s) in this document.")
 
+    excel_file = pd.ExcelWriter(os.path.join(OUTPUT_DATA_PATH, f'{JSON_PATH.stem}_tables.xlsx'), engine='openpyxl')
     # Read the form fields and tables output from the processor
-    for page in document.pages:
-        print(f"\n\n**** Page {page.page_number} ****")
+    for page in document['pages']:
+        print(f"\n\n**** Page {page['pageNumber']} ****")
 
-        print(f"\nFound {len(page.tables)} table(s):")
-        for idx, table in enumerate(page.tables):
-            num_columns = len(table.header_rows[0].cells)
-            num_rows = len(table.body_rows)
+        print(f"\nFound {len(page['tables'])} table(s):")
+
+        for idx, table in enumerate(page['tables']):
+            num_columns = len(table['headerRows'][0]['cells'])
+            num_rows = len(table['bodyRows'])
             print(f"Table with {num_columns} columns and {num_rows} rows:")
 
             # Print header rows
             print("Columns:")
-            print_table_rows(table.header_rows, text)
+            print_table_rows(table['headerRows'], text)
             # Print body rows
             print("Table body data:")
-            print_table_rows(table.body_rows, text)
+            print_table_rows(table['bodyRows'], text)
+
             # Create a DataFrame for the table
             table_data = []
-            table_data.append([layout_to_text(cell.layout, text) for cell in table.header_rows[0].cells])
-            table_data.extend([layout_to_text(cell.layout, text) for cell in row.cells] for row in table.body_rows)
+            table_data.append([layout_to_text(cell['layout'], text) for cell in table['headerRows'][0]['cells']])
+            table_data.extend([layout_to_text(cell['layout'], text) for cell in row['cells']] for row in table['bodyRows'])
             table_df = pd.DataFrame(table_data)
 
             # Save the table as an Excel file
-            table_excel_file = os.path.join(output_folder, f'table_{idx + 1}.xlsx')
-            table_df.to_excel(table_excel_file, index=False)
+            sheet_name = str(idx+1)
+            table_df.to_excel(excel_file, sheet_name=sheet_name, startrow=0 , header=False, index=False)
         
+        # Save the Excel file
+    excel_file.save()
 
-    return document
+    return None
 
 
 def print_table_rows(
-    table_rows: Sequence[documentai.Document.Page.Table.TableRow], text: str
+    table_rows, text
 ) -> None:
     for table_row in table_rows:
         row_text = ""
-        for cell in table_row.cells:
-            cell_text = layout_to_text(cell.layout, text)
+        for cell in table_row['cells']:
+            cell_text = layout_to_text(cell['layout'], text)
             row_text += f"{repr(cell_text.strip())} | "
         print(row_text)
-
-def process_document(
-    project_id=  os.getenv("PROJECT_ID"),
-    location=  os.getenv("LOCATION"),
-    processor_id=  os.getenv("PROCESSOR_ID"),
-    processor_version= 'rc',
-    file_path=  INPUT_PDF_FILE,
-    mime_type= os.getenv( "MIME_TYPE"),
-    process_options: Optional[documentai.ProcessOptions] = None,
-) -> documentai.Document:
-    
-    client = documentai.DocumentProcessorServiceClient(
-        client_options=ClientOptions(
-            api_endpoint=f"{location}-documentai.googleapis.com"
-        )
-    )
-
-    
-    name = client.processor_version_path(
-        project_id, location, processor_id, processor_version
-    )
-
-    # Read the file into memory
-    with open(str(file_path), "rb") as image:
-        image_content = image.read()
-
-    # Configure the process request
-    request = documentai.ProcessRequest(
-        name=name,
-        raw_document=documentai.RawDocument(content=image_content, mime_type=mime_type),
-        # Only supported for Document OCR processor
-        process_options=process_options,
-    )
-
-    result = client.process_document(request=request)
-
-    return result.document
 
 
 def layout_to_text(layout: documentai.Document.Page.Layout, text: str) -> str:
@@ -242,9 +206,7 @@ def layout_to_text(layout: documentai.Document.Page.Layout, text: str) -> str:
     # If a text segment spans several lines, it will
     # be stored in different text segments.
     return "".join(
-        text[int(segment.start_index) : int(segment.end_index)]
-        for segment in layout.text_anchor.text_segments
+        text[int(segment['startIndex']) : int(segment['endIndex'])]
+        for segment in layout['textAnchor']['textSegments']
     )
 
-
-process_document_form_sample()
