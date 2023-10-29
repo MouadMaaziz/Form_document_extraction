@@ -1,4 +1,4 @@
-from src.documentai_extract import parse_text_from_document, extract_info, get_tables, get_field_value
+from src.documentai_extract import parse_from_pdf, extract_info, get_tables, get_field_value
 import sys
 import os
 from pathlib import Path
@@ -24,11 +24,11 @@ if __name__ == "__main__":
     PROCESSOR_VERSION = 'rc'
 
 
+
     if sys.argv[1] == 'parse':
         # Loading the documentai credentials and Cloud project info form .env and json file.
          
-
-        parse_text_from_document(INPUT_PDF_FILE,
+        parse_from_pdf(INPUT_PDF_FILE,
                                     PROJECT_ID,
                                     PROCESSOR_ID,
                                     OUTPUT_DATA_PATH,
@@ -51,6 +51,7 @@ if __name__ == "__main__":
         )
 
         print(f'-------EXTRACTED TABLES---------\n\t{sys.argv[2]}')
+
 
     if sys.argv[1] == 'fieldvalue':
         
