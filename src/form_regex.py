@@ -95,4 +95,264 @@ Mention Text: $
 $300,500
 Confidence: 0.6153776
 
+
+
+
+
+
+BETWEEN ---> Mouad Maaziz
+(name
+ --------------------------------------------------
+(name) ---> Robert Last
+ --------------------------------------------------
+(Court seal) ---> (and
+ --------------------------------------------------
+IF YOU DO NOT PAY THE TOTAL AMOUNT OF ---> 300
+$
+LESS
+ --------------------------------------------------
+Garnishment no ---> 154847
+ --------------------------------------------------
+Date ---> 27/10/2023
+ --------------------------------------------------
+File no ---> 45
+ --------------------------------------------------
+Court ---> BSH
+ --------------------------------------------------
+Office at ---> 10:30 am
+ --------------------------------------------------
+Debtor ---> Robert Last
+ --------------------------------------------------
+Amount enclosed $ ---> 200
+ --------------------------------------------------
+Date of payment ---> 28/102023
+ --------------------------------------------------
+Garnishee ---> Yassine Walid
+ --------------------------------------------------
+Local registrar ---> Mohamed B Fakkak
+ --------------------------------------------------
+Creditor ---> Mouad Maaziz
+ --------------------------------------------------
+telephone no. ---> (555) 123-4567
+ --------------------------------------------------
+Address of court office ---> 567 Willow Lane, Apt 302, Vancouver, BC V6B 2S2
+ --------------------------------------------------
+Creditor's address ---> 789 Country Road 42, Red Deer County, AB T4E0P7
+ --------------------------------------------------
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.9894482
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 1/6
+Confidence: 0.966953
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.98944575
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 2/6
+Confidence: 0.97476566
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.9897822
+
+Entity Type: organization
+Mention Text: Mouad
+Confidence: 0.2262319
+
+Entity Type: address
+Mention Text: 101 Redwood Ave, Seattle, WA, 98101
+Confidence: 0.9946188
+
+Entity Type: address
+Mention Text: 789 Maplewood Rd, Calgary, AB, T2P 3H4
+Confidence: 0.82987577
+
+Entity Type: organization
+Mention Text: Seattle
+Confidence: 0.8672856
+
+Entity Type: phone
+Mention Text: 0608-811030
+Confidence: 0.89902914
+
+Entity Type: phone
+Mention Text: (201) 254-7854
+Confidence: 0.99577653
+
+Entity Type: email
+Mention Text: mouad.maaziz@gmail.com
+Confidence: 0.8807771
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 3/6
+Confidence: 0.97354597
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.9893838
+
+Entity Type: person
+Mention Text: Rachid
+Confidence: 0.7669241
+
+Entity Type: person
+Mention Text: Bassidi
+Confidence: 0.11165256
+
+Entity Type: quantity
+Mention Text: 12 months
+Confidence: 0.94807404
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 4/6
+Confidence: 0.9672056
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.9887284
+
+Entity Type: organization
+Mention Text: Maaziz
+Confidence: 0.2606593
+
+Entity Type: quantity
+Mention Text: 10 years
+Confidence: 0.96588695
+
+Entity Type: quantity
+Mention Text: 10 years
+Confidence: 0.9671062
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 5/6
+Confidence: 0.97007895
+
+Entity Type: date_time
+Mention Text: 10/20/23, 7:24 PM
+Confidence: 0.9881022
+
+Entity Type: organization
+Mention Text: Google
+Confidence: 0.60175204
+
+Entity Type: url
+Mention Text: Abcsubmit.com
+Confidence: 1.0
+
+Entity Type: organization
+Mention Text: SC ABCSUBMIT SRL
+Confidence: 0.38188207
+
+Entity Type: address
+Mention Text: Săcălaz, Main Street 464D, Timiş, Romania, ZipCode 307370
+Confidence: 0.90061456
+
+Entity Type: url
+Mention Text: https://www.abcsubmit.com/free-form-templates/free-dog-adoption-form-template-id_1ceoqrdg6_1tfu
+Confidence: 1.0
+
+Entity Type: page_number
+Mention Text: 6/6
+Confidence: 0.9683196
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
+
