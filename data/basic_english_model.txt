@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 342.01 MONEY
 17 CARDINAL
 20 CARDINAL
@@ -64,4 +65,72 @@ Division of Earnings Record Operations ORG
 N. Greene St. PERSON
 Baltimore GPE
 Maryland GPE
+=======
+342.01 MONEY
+17 CARDINAL
+20 CARDINAL
+March 1, 2012 DATE
+REQUEST FOR SOCIAL SECURITY EARNINGS ORG
+REQUEST FOR SOCIAL SECU ITY EARNINGS ORG
+1 CARDINAL
+Print the Name WORK_OF_ART
+Social Security Number ORG
+SSN ORG
+Mouad Maaziz PERSON
+Maiden Name LOC
+2 CARDINAL
+0 CARDINAL
+Detailed Earnings ORG
+Certified Total Earnings For Each Year ORG
+1-800-772-1213 CARDINAL
+Request PERSON
+Benefit Estimate Statement WORK_OF_ART
+Social Security ORG
+3 CARDINAL
+3 CARDINAL
+15.00 MONEY
+TOTAL ORG
+Daytime Phone WORK_OF_ART
+12/01/1975 DATE
+Mo/Day DATE
+31/12/1999 DATE
+6 CARDINAL
+Social Security Administration ORG
+Division of Earnings Record Operations
+ ORG
+Baltimore GPE
+Maryland GPE
+21290-3003 DATE
+5 CARDINAL
+Mustafa B FAKAK
+Address PERSON
+132 CARDINAL
+Hay Mohammadi GPE
+State & Zip Code ORG
+12 CARDINAL
+Hay Mohammadi GPE
+555 CARDINAL
+15.01 MONEY
+10000 MONEY
+4 CARDINAL
+ORDER ORG
+Social Security Administration ORG
+16.50 MONEY
+4 CARDINAL
+Social Security ORG
+more than $5,000 MONEY
+19/10/2023 DATE
+789 CARDINAL
+Elm St PERSON
+Othertown GPE
+98765 DATE
+Exception ORG
+FedEx GPE
+Social Security Administration ORG
+Division of Earnings Record Operations ORG
+300 CARDINAL
+N. Greene St. PERSON
+Baltimore GPE
+Maryland GPE
+>>>>>>> ba8bd7fde2332d3b89f0ebc2488b4638984f4c34
 21290-0300 DATE
