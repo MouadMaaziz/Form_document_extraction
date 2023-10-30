@@ -1,6 +1,6 @@
 env
-*.env
-data/*
+#*.env
+#data/*
 output/*
 key.json
 __pycache__
