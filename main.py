@@ -26,8 +26,9 @@ if __name__ == "__main__":
 
 
     if sys.argv[1] == 'parse':
-        # Loading the documentai credentials and Cloud project info form .env and json file.
-         
+        """ Loading the documentai credentials and Cloud project info form .env and json file.
+        general parser  cdf0d0066d96355 or form parser  330d9636fe52f1db
+        """
         parse_from_pdf(INPUT_PDF_FILE,
                                     PROJECT_ID,
                                     PROCESSOR_ID,
