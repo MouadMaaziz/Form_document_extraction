@@ -3,25 +3,23 @@ import os
 from pathlib import Path
 import re
 import json
-
+from typing import List, Dict, Tuple
 import pandas as pd
 
 from google.cloud import documentai_v1 as documentai
 from google.api_core.client_options import ClientOptions
 
-import spacy
-import en_core_web_trf
-
 from . import form_regex as fr
 
 
-def read_json(json_file):
-    with open(json_file, 'r', encoding='utf-8') as t:
+def read_json(json_file: str, OUTPUT_DATA_PATH) -> dict:
+    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
+    with open(JSON_PATH, 'r', encoding='utf-8') as t:
         doc = json.load(t)
     return doc
 
 
-def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LOCATION, MIME_TYPE):
+def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LOCATION, MIME_TYPE) -> json:
     """
     Parsing documentai response as JSON file general parser  cdf0d0066d96355 or 
     form parser  330d9636fe52f1db
@@ -53,9 +51,11 @@ def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, L
     output_document_dict = OUTPUT_DATA_PATH.joinpath(f"{INPUT_PDF_FILE.stem}.json")
     with open(output_document_dict, "w", encoding="utf-8") as json_file:
         json_file.write(json_string)
+
+    return json_file
         
 
-def get_field_value(json_file, confidence_treshold = 0):
+def get_field_value(json_file, confidence_treshold = 0) -> List[Tuple]:
     "Extracting a list of (Fields and Values, Confidence) from the JSON file"
 
     extracted_form_fields = []
@@ -71,7 +71,7 @@ def get_field_value(json_file, confidence_treshold = 0):
                 extracted_form_fields.append( (field_name, field_value, field_confidence))
     return extracted_form_fields
 
-def extract_entity_types(json_file):
+def extract_entity_types(json_file: json) -> List[Dict]:
     entity_types = []
     for entity in json_file['document']['entities']:
         for property in entity['properties']:
@@ -87,13 +87,12 @@ def extract_entity_types(json_file):
 
 
 
-def process_form_data(json_file, OUTPUT_DATA_PATH, confidence_treshold ):
+def process_form_data(json_name, OUTPUT_DATA_PATH, confidence_treshold ) -> pd.DataFrame:
     """
     Reading a JSON file and saving a spreadsheet of the field and values extracted as well as all
     the identified entities with their respective confidence according to the OCR parsing.
     """
-    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
-    json_file = read_json(JSON_PATH)
+    json_file = read_json(json_name, OUTPUT_DATA_PATH)
 
     entity_types = extract_entity_types(json_file) 
     extracted_data = get_field_value(json_file, confidence_treshold)
@@ -125,12 +124,9 @@ def process_form_data(json_file, OUTPUT_DATA_PATH, confidence_treshold ):
         except ValueError:
             pass
     
-    excel_file = os.path.join(OUTPUT_DATA_PATH, f'{JSON_PATH.stem}_results.xlsx')
+    excel_file = os.path.join(OUTPUT_DATA_PATH, f'{json_name}_results.xlsx')
     field_value_df.to_excel(excel_file, sheet_name='results', index=False, na_rep='None')
-
-
-
-
+    return None
 
 
 
