@@ -1,0 +1,66 @@
+FORM 60H
+Courts of Justice Act
+NOTICE OF GARNISHMENT
+(Court file no.)
+(Garnishment no., assigned by registrar)
+(Court)
+BETWEEN
+(name)
+Creditor
+(Court seal)
+(and)
+(name)
+Debtor
+(and)
+(name)
+Garnishee
+NOTICE OF GARNISHMENT
+TO (name and address of garnishee)
+A LEGAL PROCEEDING in this court between the creditor and the debtor has resulted in an order that the debtor pay a sum of money to
+the creditor. The creditor claims that you owe a debt to the debtor. A debt to th debtor includes both a debt payable to the debtor a debt
+payable to the debtor and one or more co-owners. The creditor has had this notice of garnishment directed to you as garnishee in order to
+seize any debt that you owe or will owe to the debtor. Where the debt is payable to the debtor and to one or more co-owners, you must pay
+one-half of the indebtedness or the greater or lesser amount specified in an order made under subrule 60.08 (16).
+YOU ARE REQUIRED TO PAY to the Sheriff of the (name of county or district),
+(a) within 10 days after this notice is served on you, all debts now payable by you to the debtor; and
+(b) within 10 days after they become payable, all debts that become payable by you to the debtor within 6 years after this notice is served on
+you,
+subject to the exemptions provided by section 7 of the ages Act. The total amount of all your payments to the sheriff is not to exceed
+$
+less $10 for your costs of making each payment.
+EACH PAYMENT MUST BE SENT with a copy of the attached garnishee's payment notice to the sheriff at the address shown below.
+IF YOU DO NOT PAY THE TOTAL AMOUNT OF $
+LESS $10 FOR YOUR COSTS OF MAKING EACH PAYMENT WITHIN 10
+DAYS after this notice is served on you, because the debt is owed to the debtor and to one or more co-owners or for any other reason, you
+must within that time serve on the creditor and the debtor and file with the court a garnishee's statement in Form 601 attached to this notice.
+IF YOU FAIL TO OBEY THIS NOTICE, THE COURT MAY MAKE AND ENFORCE AN ORDER AGAINST YOU for payment of the amount set
+out above and the costs of the creditor.
+IF YOU MAKE PAYMENT TO ANYONE OTHER THAN THE SHERIFF, YOU MAY BE LIABLE TO PAY AGAIN.
+TO THE CREDITOR, THE DEBTOR AND THE GARNISHEE.
+RCP-60H-E (2019/05)
+Any party may make a motion to the court to determine any matter in relation to this notice of garnishment.
+Date
+Issued by
+Local registrar
+Address of court office
+Debtor's address
+Sheriff's address
+Creditor's address
+telephone no.
+(The top portion of the garnishee's payment notice is to be completed by the creditor before the notice of garnishment is issued. Where it is
+anticipated that more than one payment will be made by the garnishee, the creditor should provide extra copies of the payment notice.)
+GARNISHEE'S PAYMENT NOTICE
+Make payment by cheque or money order payable to the Sheriff of the (the name of county or district) and send it, along with a copy of this
+payment notice, to the (address).
+Court
+File no
+Office at
+Garnishment no
+Creditor
+Debtor
+Garnishee
+TO BE COMPLETED BY GARNISHEE FOR EACH PAYMENT
+Date of payment
+Amount enclosed $
+Print Form
+RCP-60H-E (2019/05)

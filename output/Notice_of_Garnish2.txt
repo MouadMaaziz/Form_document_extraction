@@ -1,0 +1,87 @@
+FORM 60H
+Courts of Justice Act
+NOTICE OF GARNISHMENT
+(Court file no.)
+74542
+(Garnishment no., assigned by registrar)
+(Court)
+BETWEEN
+Mouad Maaziz
+(name)
+Creditor
+(Court seal)
+(and)
+(name)
+Robert Last
+Debtor
+(and)
+(name)
+Yassine Walid
+Garnishee
+NOTICE OF GARNISHMENT
+TO (name and address of garnishee)
+A LEGAL PROCEEDING in this court between the creditor and the debtor has resulted in an order that the debtor pay a sum of money to
+the creditor. The creditor claims that you owe a debt to the debtor. A debt to the debtor includes both a debt payable to the debtor and a debt
+payable to the debtor and one or more co-owners. The creditor has had this notice of garnishment directed to you as garnishee in order to
+seize any debt that you owe or will owe to the debtor. Where the debt is payable to the debtor and to one or more co-owners, you must pay
+one-half of the indebtedness or the greater or lesser amount specified in an order made under subrule 60.08 (16).
+YOU ARE REQUIRED TO PAY to the Sheriff of the (name of county or district),
+(a) within 10 days after this notice is served on you, all debts now payable by you to the debtor; and
+(b) within 10 days after they become payable, all debts that become payable by you to the debtor within 6 years after this notice is served on
+you,
+subject to the exemptions provided by section 7 of the Wages Act. The total amount of all your payments to the sheriff is not to exceed
+300
+$
+less $10 for your costs of making each payment.
+EACH PAYMENT MUST BE SENT with a copy of the attached garnishee's payment notice to the sheriff at the address shown below.
+300
+IF YOU DO NOT PAY THE TOTAL AMOUNT OF $
+LESS $10 FOR YOUR COSTS OF MAKING EACH PAYMENT WITHIN 10
+DAYS after this notice is served on you, because the debt is owed to the debtor and to one or more co-owners or for any other reason, you
+must within that time serve on the creditor and the debtor and file with the court a garnishee's statement in Form 601 attached to this notice.
+IF YOU FAIL TO OBEY THIS NOTICE, THE COURT MAY MAKE AND ENFORCE AN ORDER AGAINST YOU for payment of the amount set
+out above and the costs of the creditor.
+IF YOU MAKE PAYMENT TO ANYONE OTHER THAN THE SHERIFF, YOU MAY BE LIABLE TO PAY AGAIN.
+TO THE CREDITOR, THE DEBTOR AND THE GARNISHEE.
+RCP-60H-E (2019/05)
+Any party may make a motion to the court to determine any matter in relation to this notice of garnishment.
+27/10/2023
+Mohamed B Fakkak
+Date
+Issued by
+Local registrar
+Address of court office
+567 Willow Lane, Apt 302, Vancouver, BC V6B 2S2
+Debtor's address
+123 Maple Street, Ottawa, ON K2P 0A4, Canada
+Sheriff's address
+789 Country Road 42, Red Deer County, AB T4E0P7
+Creditor's address
+567 Willow Lane, Apt 302, Vancouver, BC V6B 2S2
+telephone no.
+(555) 123-4567
+(The top portion of the garnishee's payment notice is to be completed by the creditor before the notice of garnishment is issued. Where it is
+anticipated that more than one payment will be made by the garnishee, the creditor should provide extra copies of the payment notice.)
+GARNISHEE'S PAYMENT NOTICE
+Make payment by cheque or money order payable to the Sheriff of the (the name of county or district) and send it, along with a copy of this
+payment notice, to the (address).
+BSH
+45
+Court
+File no
+10:30 am
+Office at
+Garnishment no
+154847
+Mouad Maaziz
+Creditor
+Robert Last
+Debtor
+Garnishee
+Yassine Walid
+TO BE COMPLETED BY GARNISHEE FOR EACH PAYMENT
+Date of payment
+28/102023
+200
+Amount enclosed $
+RCP-60H-E (2019/05)
