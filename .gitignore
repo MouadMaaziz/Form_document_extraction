@@ -1,7 +1,7 @@
 env
-.env
+#.env
 data/*
-output/*
+#output/*
 key.json
 __pycache__
 #*.ipynb

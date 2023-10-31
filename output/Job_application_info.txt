@@ -1,0 +1,1 @@
+﻿{'full_name': ['Name', 'Mouad', 'Email', 'First', 'Reset', 'Student', 'Resume', 'Last'], 'dates': ['01/03/1997'], 'email': ['mouad.maaziz@gmail.com', 'mymanager@gmail.com']}

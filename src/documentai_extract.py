@@ -19,7 +19,10 @@ from . import form_regex as fr
 
 
 def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LOCATION, MIME_TYPE):
-    """Parsing documentai response as JSON file"""
+    """
+    Parsing documentai response as JSON file general parser  cdf0d0066d96355 or 
+    form parser  330d9636fe52f1db
+    """
 
     client = documentai.DocumentProcessorServiceClient(
         client_options=ClientOptions(api_endpoint=f'{LOCATION}-documentai.googleapis.com')
@@ -157,8 +160,7 @@ def locate_fields(fields:dict, text_lines:list):
         field_index[field]=field_indices
     return field_index
 
-def extract_info(text_file, OUTPUT_DATA_PATH):
-
+def extract_patterns(text_file, OUTPUT_DATA_PATH):
 
     # Load the english NLP model
     nlp = spacy.load('en_core_web_trf')
@@ -193,7 +195,7 @@ def extract_info(text_file, OUTPUT_DATA_PATH):
                         else:
                             continue
     
-    output_info = OUTPUT_DATA_PATH.joinpath(f"{text_file}_info.txt")
+    output_info = OUTPUT_DATA_PATH.joinpath(f"{text_file}_patterns.txt")
     with open(output_info, "w", encoding= 'utf-8-sig') as doc:
         doc.write(str(info))
 

@@ -1,0 +1,30 @@
+Job Application Form
+Thank you for your interest in working with us. Please check below for
+available job opportunities that meet your criteria and send your application
+by filling out the Job Application Form.
+Name
+Mouad
+Email
+mouad.maaziz@gmail.com
+What position are you applying for?
+IT manager
+What is your current employee status?
+O Employed
+O Unemployed
+Please provide your resume link
+https://www.example.com/
+Do you have references? (optional)
+First
+Reference email
+mymanager@gmail.com
+Reset
+Apply
+Maazi
+Available date
+KERATANTE
+01/03/1997
+O Self-Employed
+Student
+Please upload your resume
+Resume
+Last
