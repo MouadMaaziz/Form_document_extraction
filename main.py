@@ -1,7 +1,6 @@
 # Import necessary functions and modules
 from src.documentai_extract import (
-    parse_from_pdf, extract_patterns, get_tables, get_field_value,
-    process_form_data
+    parse_from_pdf, extract_patterns, get_tables, process_form_data
 )
 from  src.document_info import  get_info
 import sys
@@ -16,7 +15,7 @@ if __name__ == "__main__":
     # Load documentai credentials and Cloud project info from environment variables and a JSON file.
     load_dotenv()
     PROJECT_PATH = Path.cwd()
-    INPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("INPUT_FOLDER"))
+    PDF_FILE_PATH = PROJECT_PATH.joinpath(os.getenv("INPUT_FOLDER"))
     OUTPUT_DATA_PATH = PROJECT_PATH.joinpath(os.getenv("OUTPUT_FOLDER"))
 
     # Read the project ID from a JSON file
@@ -27,7 +26,7 @@ if __name__ == "__main__":
     LOCATION = os.getenv("LOCATION")
     MIME_TYPE = os.getenv("MIME_TYPE")
     PROCESSOR_ID = os.getenv("PROCESSOR_ID")
-    INPUT_PDF_FILE = INPUT_DATA_PATH.joinpath(f'{sys.argv[2]}.pdf')
+    INPUT_PDF_FILE = PDF_FILE_PATH.joinpath(f'{sys.argv[2]}.pdf')
     PROCESSOR_VERSION = os.getenv("PROCESSOR_VERSION")
 
     # Determine the action based on the command line argument
@@ -43,7 +42,7 @@ if __name__ == "__main__":
             LOCATION,
             MIME_TYPE
         )
-        print(f"Parsed text from PDF:\t {sys.argv[2]}")
+        print(f'****** PARSED DOCUMENT ******\n\t{sys.argv[2]}')
 
 
     if action == 'process':
@@ -52,19 +51,18 @@ if __name__ == "__main__":
             
         else:
             process_form_data(sys.argv[2], OUTPUT_DATA_PATH, 0)
-        print(f'------- GENERATED RESULTS ---------\n\t{sys.argv[2]}')
+        print(f'****** GENERATED RESULTS ******\n\t{sys.argv[2]}')
 
     if action == 'document_info':
         get_info(INPUT_PDF_FILE, OUTPUT_DATA_PATH)
-        print(f'-------EXTRACTED METADATA---------\n\t{sys.argv[2]}')
+        print(f'****** EXTRACTED METADATA ******\n\t{sys.argv[2]}')
 
 
     if action == 'tables':
         get_tables(sys.argv[2], OUTPUT_DATA_PATH)
-        print(f'-------EXTRACTED TABLES---------\n\t{sys.argv[2]}')
-
+        print(f'****** EXTRACTED TABLES ******\n\t{sys.argv[2]}')
 
 
     if action == 'patterns':
         extract_patterns(sys.argv[2], OUTPUT_DATA_PATH)
-        print(f'-------EXTRACTED PATTERNS---------\n\t{sys.argv[2]}')
+        print(f'****** EXTRACTED PATTERNS ******\n\t{sys.argv[2]}')
