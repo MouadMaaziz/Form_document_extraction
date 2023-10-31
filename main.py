@@ -1,6 +1,7 @@
 # Import necessary functions and modules
 from src.documentai_extract import (
-    parse_from_pdf, extract_patterns, get_tables, get_field_value
+    parse_from_pdf, extract_patterns, get_tables, get_field_value,
+    process_form_data
 )
 from  src.document_info import  get_info
 import sys
@@ -9,8 +10,9 @@ from pathlib import Path
 import json
 from dotenv import load_dotenv
 
-if __name__ == "__main":
-    print("Entering __main__ block...")
+
+
+if __name__ == "__main__":
     # Load documentai credentials and Cloud project info from environment variables and a JSON file.
     load_dotenv()
     PROJECT_PATH = Path.cwd()
@@ -33,7 +35,6 @@ if __name__ == "__main":
 
     # Execute the appropriate action
     if action == 'parse':
-        print("parsing_PDF")
         parse_from_pdf(
             INPUT_PDF_FILE,
             PROJECT_ID,
@@ -45,19 +46,25 @@ if __name__ == "__main":
         print(f"Parsed text from PDF:\t {sys.argv[2]}")
 
 
+    if action == 'process':
+        if len(sys.argv) > 3 and sys.argv[3]:
+            process_form_data(sys.argv[2], OUTPUT_DATA_PATH, sys.argv[3])
+            
+        else:
+            process_form_data(sys.argv[2], OUTPUT_DATA_PATH, 0)
+        print(f'------- GENERATED RESULTS ---------\n\t{sys.argv[2]}')
 
     if action == 'document_info':
         get_info(INPUT_PDF_FILE, OUTPUT_DATA_PATH)
+        print(f'-------EXTRACTED METADATA---------\n\t{sys.argv[2]}')
 
 
     if action == 'tables':
         get_tables(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'-------EXTRACTED TABLES---------\n\t{sys.argv[2]}')
 
-    if action == 'fieldvalue':
-        get_field_value(sys.argv[2], OUTPUT_DATA_PATH)
-        print(f'-------EXTRACTED Fields and Values---------\n\t{sys.argv[2]}')
 
-    if action == 'extract':
+
+    if action == 'patterns':
         extract_patterns(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'-------EXTRACTED PATTERNS---------\n\t{sys.argv[2]}')

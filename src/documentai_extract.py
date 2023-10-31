@@ -15,7 +15,10 @@ import en_core_web_trf
 from . import form_regex as fr
 
 
-
+def read_json(json_file):
+    with open(json_file, 'r', encoding='utf-8') as t:
+        doc = json.load(t)
+    return doc
 
 
 def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LOCATION, MIME_TYPE):
@@ -52,14 +55,10 @@ def parse_from_pdf(INPUT_PDF_FILE, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, L
         json_file.write(json_string)
         
 
-def get_field_value(json_file, OUTPUT_DATA_PATH):
-    "Extracting Fields and Values from the JSON file"
-    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
-    with open(JSON_PATH, 'r', encoding='utf-8') as t:
-        json_file = json.load(t)
-    excel_file = os.path.join(OUTPUT_DATA_PATH, f'{JSON_PATH.stem}_field_value.xlsx')
+def get_field_value(json_file, confidence_treshold = 0):
+    "Extracting a list of (Fields and Values, Confidence) from the JSON file"
+
     extracted_form_fields = []
-    field_value_df = pd.DataFrame()
     pages = json_file['document']['pages']
     for page in pages:
         form_fields = page.get('formFields', [])
@@ -67,13 +66,72 @@ def get_field_value(json_file, OUTPUT_DATA_PATH):
         for form_field in form_fields:
             field_name = form_field.get('fieldName', {}).get('textAnchor', {}).get('content', '').strip()
             field_value = form_field.get('fieldValue', {}).get('textAnchor', {}).get('content', '').strip()
-            
-            extracted_form_fields.append( (field_name, field_value))
-    field_value_df['Field'] = [x for x,_ in extracted_form_fields]
-    field_value_df['value'] = [x for _,x in extracted_form_fields]
-    field_value_df.to_excel(excel_file, sheet_name='field - values', index=False)
-    print(field_value_df)
-    return None
+            field_confidence = form_field.get('fieldName', {}).get('confidence', {})
+            if field_confidence > float(confidence_treshold):
+                extracted_form_fields.append( (field_name, field_value, field_confidence))
+    return extracted_form_fields
+
+def extract_entity_types(json_file):
+    entity_types = []
+    for entity in json_file['document']['entities']:
+        for property in entity['properties']:
+            entity_type = property['type']
+            mention_text = property['mentionText']
+            confidence = property['confidence']
+            entity_types.append({
+                'entityType': entity_type,
+                'mentionText': mention_text,
+                'confidence': confidence
+            })
+    return entity_types
+
+
+
+def process_form_data(json_file, OUTPUT_DATA_PATH, confidence_treshold ):
+    """
+    Reading a JSON file and saving a spreadsheet of the field and values extracted as well as all
+    the identified entities with their respective confidence according to the OCR parsing.
+    """
+    JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_file}.json')
+    json_file = read_json(JSON_PATH)
+
+    entity_types = extract_entity_types(json_file) 
+    extracted_data = get_field_value(json_file, confidence_treshold)
+    field_value_df = pd.DataFrame()
+    field_value_df['Field'] = [x for x,_,_ in extracted_data ]
+    field_value_df['value'] = [x for _,x,_ in extracted_data ]
+    field_value_df['confidence'] = [x for _,_,x in extracted_data ]
+
+
+    field_value_df['data_type'] = None
+    field_value_df['data_type_confidence'] = None
+
+    for index, row in field_value_df.iterrows():
+        field_text = str(row['Field']).lower()
+        value_text = str(row['value'])
+        max_confidence =[]
+        for ent in entity_types:
+            entity_type = ent['entityType']
+            entity_text = ent['mentionText']
+        
+            # Check if the entity type is in 'Field' or 'value' (case-insensitive)
+            if (entity_text in field_text or entity_text in value_text) and entity_type not in ('page_number') :
+                max_confidence.append(ent)
+        try:
+            if max_confidence:
+                max_entity = max(max_confidence, key=lambda x: x['confidence'])
+                field_value_df.at[index, 'data_type'] = max_entity['entityType']
+                field_value_df.at[index, 'data_type_confidence'] = max_entity['confidence']
+        except ValueError:
+            pass
+    
+    excel_file = os.path.join(OUTPUT_DATA_PATH, f'{JSON_PATH.stem}_results.xlsx')
+    field_value_df.to_excel(excel_file, sheet_name='results', index=False, na_rep='None')
+
+
+
+
+
 
 
 def get_tables(json_file, OUTPUT_DATA_PATH ) -> documentai.Document:
