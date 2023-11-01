@@ -15,7 +15,6 @@ from . import form_regex as fr
 def read_json(json_filename: str, OUTPUT_DATA_PATH) -> dict:
     """
     Read and load a JSON file from the specified path.
-
     """
     JSON_PATH = OUTPUT_DATA_PATH.joinpath(f'{json_filename}.json')
     with open(JSON_PATH, 'r', encoding='utf-8') as t:
@@ -101,11 +100,7 @@ def process_form_data(json_name, OUTPUT_DATA_PATH, confidence_threshold ) -> pd.
 
     entity_types = extract_entity_types(json_file) 
     extracted_data = get_field_value(json_file, confidence_threshold)
-    field_value_df = pd.DataFrame()
-    field_value_df['Field'] = [x for x,_,_ in extracted_data ]
-    field_value_df['value'] = [x for _,x,_ in extracted_data ]
-    field_value_df['confidence'] = [x for _,_,x in extracted_data ]
-
+    field_value_df = pd.DataFrame(extracted_data, columns=['Field', 'value', 'confidence'])
 
     field_value_df['data_type'] = None
     field_value_df['data_type_confidence'] = None
@@ -114,12 +109,13 @@ def process_form_data(json_name, OUTPUT_DATA_PATH, confidence_threshold ) -> pd.
         field_text = str(row['Field']).lower()
         value_text = str(row['value'])
         max_confidence =[]
+
         for ent in entity_types:
             entity_type = ent['entityType']
             entity_text = ent['mentionText']
         
             # Check if the entity type is in 'Field' or 'value' (case-insensitive)
-            if (entity_text in field_text or entity_text in value_text) and entity_type not in ('page_number') :
+            if (entity_text in field_text or entity_text in value_text) and entity_type != 'page_number' :
                 max_confidence.append(ent)
         try:
             if max_confidence:
@@ -144,8 +140,9 @@ def get_tables(json_name, OUTPUT_DATA_PATH ):
     document = json_file['document']
     text = document['text']
     print(f"There are {len(document['pages'])} page(s) in this document.")
+    excel_file_path = os.path.join(OUTPUT_DATA_PATH, f'{json_name}_tables.xlsx')
+    excel_file = pd.ExcelWriter(excel_file_path, engine='openpyxl')
 
-    excel_file = pd.ExcelWriter(os.path.join(OUTPUT_DATA_PATH, f'{json_name}_tables.xlsx'), engine='openpyxl')
     # Read the form fields and tables output from the processor
     for page in document['pages']:
         print(f"\n**** Page {page['pageNumber']} ****")
@@ -159,8 +156,12 @@ def get_tables(json_name, OUTPUT_DATA_PATH ):
 
             # Create a DataFrame for the table
             table_data = []
-            table_data.append([layout_to_text(cell['layout'], text) for cell in table['headerRows'][0]['cells']])
-            table_data.extend([layout_to_text(cell['layout'], text) for cell in row['cells']] for row in table['bodyRows'])
+            table_data.append([layout_to_text(cell['layout'], text) 
+                               for cell in table['headerRows'][0]['cells']]
+            )
+            table_data.extend([layout_to_text(cell['layout'], text) 
+                               for cell in row['cells']] for row in table['bodyRows']
+            )
             table_df = pd.DataFrame(table_data)
 
             # Save the table as an Excel file
