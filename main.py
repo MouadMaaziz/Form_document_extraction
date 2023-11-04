@@ -8,11 +8,12 @@ import os
 from pathlib import Path
 import json
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+
 
 
 
 if __name__ == "__main__":
+
     # Load documentai credentials and Cloud project info from environment variables and a JSON file.
     load_dotenv()
     PROJECT_PATH = Path.cwd()
@@ -35,7 +36,7 @@ if __name__ == "__main__":
 
     # Execute the appropriate action
     if action == 'parse':
-        parse_from_pdf(
+        processed_pdf = parse_from_pdf(
             INPUT_PDF_FILE,
             PROJECT_ID,
             PROCESSOR_ID,
@@ -48,24 +49,24 @@ if __name__ == "__main__":
 
     if action == 'process':
         if len(sys.argv) > 3 and sys.argv[3]:
-            process_form_data(sys.argv[2], OUTPUT_DATA_PATH, sys.argv[3])
+            processed_pdf =process_form_data(sys.argv[2], OUTPUT_DATA_PATH, sys.argv[3])
             
         else:
-            process_form_data(sys.argv[2], OUTPUT_DATA_PATH, 0)
+            processed_pdf =process_form_data(sys.argv[2], OUTPUT_DATA_PATH, 0)
         print(f'****** GENERATED RESULTS ******\n\t{sys.argv[2]}')
 
     if action == 'document_info':
-        get_info(INPUT_PDF_FILE, OUTPUT_DATA_PATH)
+        processed_pdf =get_info(INPUT_PDF_FILE, OUTPUT_DATA_PATH)
         print(f'****** EXTRACTED METADATA ******\n\t{sys.argv[2]}')
 
 
     if action == 'tables':
-        get_tables(sys.argv[2], OUTPUT_DATA_PATH)
+        processed_pdf =get_tables(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'****** EXTRACTED TABLES ******\n\t{sys.argv[2]}')
 
 
     if action == 'patterns':
-        extract_patterns(sys.argv[2], OUTPUT_DATA_PATH)
+        processed_pdf =extract_patterns(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'****** EXTRACTED PATTERNS ******\n\t{sys.argv[2]}')
 
-
+    

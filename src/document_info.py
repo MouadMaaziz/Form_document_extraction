@@ -1,6 +1,7 @@
 import pdfx
 import pandas as pd
 import os
+from io import BytesIO
 
 
 def get_info(pdf_file,OUTPUT_DATA_PATH):
@@ -9,3 +10,4 @@ def get_info(pdf_file,OUTPUT_DATA_PATH):
     df = pd.DataFrame(metadata, index=[0])
     excel_file = os.path.join(OUTPUT_DATA_PATH, f'{pdf_file.stem}_metadata.xlsx')
     df.to_excel(excel_file, sheet_name='metadata_by_pdfx', index=False)
+    return excel_file

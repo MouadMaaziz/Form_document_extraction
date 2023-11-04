@@ -51,12 +51,11 @@ def parse_from_pdf(pdf_file_path, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LO
     with open(output_document_dict, "w", encoding="utf-8") as json_file:
         json_file.write(json_string)
 
-    return json_file
+    return pdf_file_path.stem
         
 
 def get_field_value(json_file, confidence_threshold = 0) -> List[Tuple]:
     "Extracting a list of (Fields and Values, Confidence) from the JSON file"
-
     extracted_form_fields = []
     pages = json_file['document']['pages']
     for page in pages:
@@ -67,7 +66,7 @@ def get_field_value(json_file, confidence_threshold = 0) -> List[Tuple]:
             value = form_field.get('fieldValue', {}).get('textAnchor', {}).get('content', '').strip()
             confidence = form_field.get('fieldName', {}).get('confidence', {})
             if confidence > float(confidence_threshold):
-                extracted_form_fields.append( (field, value, confidence))
+                    extracted_form_fields.append( (field, value, confidence))
     return extracted_form_fields
 
 def extract_entity_types(json_file: json) -> List[Dict]:
@@ -97,9 +96,9 @@ def process_form_data(json_name, OUTPUT_DATA_PATH, confidence_threshold ) -> pd.
     """
     # Reading JSON file
     json_file = read_json(json_name, OUTPUT_DATA_PATH)
-
+    confidence = confidence_threshold
     entity_types = extract_entity_types(json_file) 
-    extracted_data = get_field_value(json_file, confidence_threshold)
+    extracted_data = get_field_value(json_file, confidence)
     field_value_df = pd.DataFrame(extracted_data, columns=['Field', 'value', 'confidence'])
 
     field_value_df['data_type'] = None
@@ -127,7 +126,7 @@ def process_form_data(json_name, OUTPUT_DATA_PATH, confidence_threshold ) -> pd.
     
     excel_file = os.path.join(OUTPUT_DATA_PATH, f'{json_name}_results.xlsx')
     field_value_df.to_excel(excel_file, sheet_name='results', index=False, na_rep='None')
-    return field_value_df
+    return excel_file
 
 
 
@@ -150,28 +149,38 @@ def get_tables(json_name, OUTPUT_DATA_PATH ):
         print(f"\nFound {len(page['tables'])} table(s):")
 
         for idx, table in enumerate(page['tables']):
-            num_columns = len(table['headerRows'][0]['cells'])
-            num_rows = len(table['bodyRows'])
+            try:
+                num_columns = len(table['headerRows'][0]['cells'])
+                num_rows = len(table['bodyRows'])
+            except IndexError:
+                num_columns = 0
+                num_rows = 0
             print(f"Table with {num_columns} columns and {num_rows} rows:")
 
             # Create a DataFrame for the table
             table_data = []
-            table_data.append([layout_to_text(cell['layout'], text) 
-                               for cell in table['headerRows'][0]['cells']]
-            )
-            table_data.extend([layout_to_text(cell['layout'], text) 
-                               for cell in row['cells']] for row in table['bodyRows']
-            )
+            try:
+                table_data.append([layout_to_text(cell['layout'], text) 
+                                for cell in table['headerRows'][0]['cells']]
+                )
+            except IndexError:
+                pass
+            try:
+                table_data.extend([layout_to_text(cell['layout'], text) 
+                                for cell in row['cells']] for row in table['bodyRows']
+                )
+            except IndexError:
+                pass
             table_df = pd.DataFrame(table_data)
 
             # Save the table as an Excel file
             sheet_name = str(idx+1)
             table_df.to_excel(excel_file, sheet_name=sheet_name, startrow=0 , header=False, index=False)
-        
+            
         # Save the Excel file
-    excel_file.save()
+    excel_file._save()
 
-    return None
+    return excel_file
 
 def layout_to_text(layout: documentai.Document.Page.Layout, text: str) -> str:
     """

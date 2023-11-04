@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Upload</title>
+</head>
+<body>
+    <h1>Upload a PDF</h1>
+    <form action="/process_pdf" method="post" enctype="multipart/form-data">
+        <label for="file">Select a PDF file:</label>
+        <input type="file" name="file" id="file" accept=".pdf" required>
+        <br>
+        <label for="function">Select a function:</label>
+        <select name="function" id="function" required>
+            <option value="document_info">Document Metadata</option>
+            <option value="process">Process and get results</option>
+            <option value="tables">Tables</option>
+        </select>
+        <br>
+        <label for="additional_param">Additional Parameter (if needed):</label>
+        <input type="text" name="additional_param" id="additional_param">
+        <br>
+        <div id="confidenceField" style="display: none;">
+            <label for="number">Confidence greater than:</label>
+            <input type="number" name="confidence" id="confidence" min="0" max="1" step="0.01" value="0">
+        </div>
+        <br>
+        <input type="submit" value="Upload and Process">
+    </form>
+
+    <script>
+        // JavaScript to show/hide the "number" field based on the selected function
+        const functionSelect = document.getElementById('function');
+        const numberField = document.getElementById('confidenceField');
+
+        functionSelect.addEventListener('change', function () {
+            if (functionSelect.value === 'process') {
+                numberField.style.display = 'block';
+            } else {
+                numberField.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
