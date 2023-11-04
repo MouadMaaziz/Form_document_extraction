@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import json
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify
 
 
 
@@ -66,3 +67,5 @@ if __name__ == "__main__":
     if action == 'patterns':
         extract_patterns(sys.argv[2], OUTPUT_DATA_PATH)
         print(f'****** EXTRACTED PATTERNS ******\n\t{sys.argv[2]}')
+
+
