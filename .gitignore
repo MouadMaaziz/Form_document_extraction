@@ -3,7 +3,7 @@ venv
 #.env
 data/*
 #output/*
-key.json
+#key.json
 __pycache__
 #*.ipynb
 !/data/.gitkeep
