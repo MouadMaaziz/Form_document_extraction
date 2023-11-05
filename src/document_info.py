@@ -1,7 +1,6 @@
 import pdfx
 import pandas as pd
 import os
-from io import BytesIO
 
 
 def get_info(pdf_file,OUTPUT_DATA_PATH):
