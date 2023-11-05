@@ -18,7 +18,7 @@ input[type="file"],
 select,
 input[type="text"],
 input[type="number"] {
-   width: 30%;
+   width: 25%;
    padding: 10px;
    margin-top: 5px;
    margin-bottom: 15px;
