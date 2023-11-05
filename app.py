@@ -34,7 +34,6 @@ PROCESSOR_VERSION = os.getenv("PROCESSOR_VERSION")
 UPLOAD_FOLDER = PDF_FILE_PATH
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 @app.route('/')
 def home():
     return render_template('upload.html')  # Render the HTML template
@@ -76,7 +75,8 @@ def process_pdf():
         return send_file(processed_pdf, as_attachment=True)
 
     elif selected_function == 'document_info':
-        processed_pdf = get_info(UPLOAD_FOLDER.joinpath(file.filename) , OUTPUT_DATA_PATH)
+        processed_pdf = get_info(input_pdf_path , OUTPUT_DATA_PATH)
+        
         return send_file(processed_pdf, as_attachment=True)
 
     elif selected_function == 'tables':
