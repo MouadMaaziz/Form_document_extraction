@@ -76,7 +76,7 @@ def process_pdf():
         return send_file(processed_pdf, as_attachment=True)
 
     elif selected_function == 'document_info':
-        processed_pdf = get_info(UPLOAD_FOLDER.joinpath(file.filename.stem) , OUTPUT_DATA_PATH)
+        processed_pdf = get_info(UPLOAD_FOLDER.joinpath(file.filename) , OUTPUT_DATA_PATH)
         return send_file(processed_pdf, as_attachment=True)
 
     elif selected_function == 'tables':
