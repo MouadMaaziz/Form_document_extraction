@@ -1,0 +1,46 @@
+/* styles.css */
+
+body {
+   font-family: Arial, sans-serif;
+   margin: 20px;
+}
+
+h1 {
+   color: #333;
+}
+
+label {
+   display: block;
+   margin-top: 10px;
+}
+
+input[type="file"],
+select,
+input[type="text"],
+input[type="number"] {
+   width: 30%;
+   padding: 10px;
+   margin-top: 5px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+   font-size: 16px;
+}
+
+input[type="submit"] {
+   background-color: #007BFF;
+   color: #fff;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 3px;
+   cursor: pointer;
+   font-size: 18px;
+}
+
+input[type="submit"]:hover {
+   background-color: #0056b3;
+}
+
+#confidenceField {
+   display: none;
+}
