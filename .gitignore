@@ -5,6 +5,6 @@ data/*
 #output/*
 #key.json
 __pycache__
-#*.ipynb
+*.ipynb
 !/data/.gitkeep
 !/output/.gitkeep
