@@ -94,5 +94,25 @@ def process_pdf():
     else:
         return jsonify({'error': 'Invalid function selection'})
 
+
+# Define a teardown function to delete the uploaded PDF file after the request is handled.
+
+@app.after_request
+def cleanup_uploaded_file(response):
+    file = request.files.get('file')
+
+    if file and file.filename:
+        # Get the filename of the uploaded PDF from the request
+        filename = secure_filename(file.filename)
+
+        # Construct the full path to the uploaded PDF
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+
+        # Check if the file exists and delete it
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"File '{filename}' deleted")
+    return response
+
 if __name__ == "__main__":
     app.run(debug=True)
