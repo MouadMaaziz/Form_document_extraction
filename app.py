@@ -10,9 +10,10 @@ import json
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, send_file, render_template
 from werkzeug.utils import secure_filename
+import time
 
 
-app = Flask(__name__, template_folder='./templates')
+
 
 # Load documentai credentials and Cloud project info from environment variables and a JSON file
 load_dotenv()
@@ -31,6 +32,7 @@ PROCESSOR_ID = os.getenv("PROCESSOR_ID")
 PROCESSOR_VERSION = os.getenv("PROCESSOR_VERSION")
 
 
+app = Flask(__name__, template_folder='./templates')
 UPLOAD_FOLDER = PDF_FILE_PATH
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -96,23 +98,14 @@ def process_pdf():
 
 
 # Define a teardown function to delete the uploaded PDF file after the request is handled.
+@app.teardown_request
+def teardown_request(exception):
+    # Delete the uploaded PDF file
+    if 'file' in request.files:
+        file = request.files['file']
+        if file and os.path.exists(file.filename):
+            os.remove(file.filename)
 
-@app.after_request
-def cleanup_uploaded_file(response):
-    file = request.files.get('file')
-
-    if file and file.filename:
-        # Get the filename of the uploaded PDF from the request
-        filename = secure_filename(file.filename)
-
-        # Construct the full path to the uploaded PDF
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-
-        # Check if the file exists and delete it
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print(f"File '{filename}' deleted")
-    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
