@@ -10,7 +10,7 @@ import json
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, send_file, render_template
 from werkzeug.utils import secure_filename
-import time
+import datetime
 
 
 
@@ -98,14 +98,21 @@ def process_pdf():
 
 
 # Define a teardown function to delete the uploaded PDF file after the request is handled.
-@app.teardown_request
-def teardown_request(exception):
-    # Delete the uploaded PDF file
-    if 'file' in request.files:
-        file = request.files['file']
-        if file and os.path.exists(file.filename):
-            os.remove(file.filename)
 
+
+@app.teardown_request
+def cleanup_upload_folder(request):
+    file_list = os.listdir(UPLOAD_FOLDER)
+    threshold_date = datetime.datetime.now() - datetime.timedelta(minutes=5)
+    print(file_list)
+    for file in file_list:
+        file_path = UPLOAD_FOLDER.joinpath(file)
+        file_stat = os.stat(file_path)
+        file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
+        if file_mtime < threshold_date and str(file_path).endswith(('.pdf','png','jpeg','jpg')):
+            os.remove(file_path)
+            print(f"Removed {file_path}")
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
