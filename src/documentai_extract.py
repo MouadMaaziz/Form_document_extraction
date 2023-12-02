@@ -54,6 +54,18 @@ def parse_from_pdf(pdf_file_path, PROJECT_ID, PROCESSOR_ID, OUTPUT_DATA_PATH, LO
     return pdf_file_path.stem
         
 
+def get_document_text(json_name: json, OUTPUT_DATA_PATH):
+    "Extracting raw text from the JSON file"
+    json_file = read_json(json_name, OUTPUT_DATA_PATH)
+    text = json_file['document']['text']
+    # text_file = OUTPUT_DATA_PATH.joinpath(f'{json_name}_raw_text.txt')
+    text_file = os.path.join(OUTPUT_DATA_PATH, f'{json_name}_raw_text.txt')
+    with open(text_file, "w", encoding='utf-8') as f:
+        f.write(text)
+    return text_file
+
+
+
 def get_field_value(json_file, confidence_threshold = 0) -> List[Tuple]:
     "Extracting a list of (Fields and Values, Confidence) from the JSON file"
     extracted_form_fields = []

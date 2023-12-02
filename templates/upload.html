@@ -13,6 +13,7 @@
         <br>
         <label for="function">Select a function:</label>
         <select name="function" id="function" required>
+            <option value="document_text">Document Text</option>
             <option value="document_info">Document Metadata</option>
             <option value="process">Process and get results</option>
             <option value="tables">Tables</option>
@@ -23,6 +24,7 @@
             <input type="number" name="confidence" id="confidence" min="0" max="1" step="0.1" value="0">
         </div>
         <div id="functionDescription">
+            <p id="text" style="display: none;"><strong>Description:</strong> Extract the document's raw Text</p>
             <p id="process" style="display: none;"><strong>Description:</strong> Process the document and extract Field:value pairs and named entities with a
                 certain confidence.</p>
             <p id="docMetadata" style="display: none;"><strong>Description:</strong> Extract the PDF's metadata (if available) Title, Pages, Author, Dates..
@@ -41,14 +43,26 @@
         const functionSelect = document.getElementById('function');
         const confidenceField = document.getElementById('confidenceField');
         
+        const textDesctiption = document.getElementById('text')
         const processDesctiption = document.getElementById('process')
         const metaDesctiption = document.getElementById('docMetadata')
         const tablesDesctiption = document.getElementById('tables')
 
         functionSelect.addEventListener('change', function () {
-            if (functionSelect.value === 'process') {
+            if (functionSelect.value === 'document_text') {
+                confidenceField.style.display = 'none';
+
+                textDesctiption.style.display = 'block';
+                processDesctiption.style.display = 'none';
+                metaDesctiption.style.display = 'none';
+                tablesDesctiption.style.display = 'none';
+            }
+
+
+            else if (functionSelect.value === 'process') {
                 confidenceField.style.display = 'block';
 
+                textDesctiption.style.display = 'none';
                 processDesctiption.style.display = 'block';
                 metaDesctiption.style.display = 'none';
                 tablesDesctiption.style.display = 'none';
@@ -56,6 +70,7 @@
             else if(functionSelect.value === 'document_info'){
                 confidenceField.style.display = 'none';
 
+                textDesctiption.style.display = 'none';
                 processDesctiption.style.display = 'none';
                 metaDesctiption.style.display = 'block';
                 tablesDesctiption.style.display = 'none';
@@ -63,6 +78,7 @@
             else if(functionSelect.value === 'tables'){
                 confidenceField.style.display = 'none';
 
+                textDesctiption.style.display = 'none';
                 processDesctiption.style.display = 'none';
                 metaDesctiption.style.display = 'none';
                 tablesDesctiption.style.display = 'block';

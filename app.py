@@ -1,6 +1,6 @@
 # Import necessary functions and modules
 from src.documentai_extract import (
-    parse_from_pdf, extract_patterns, get_tables, process_form_data
+    parse_from_pdf, extract_patterns, get_tables, process_form_data, get_document_text
 )
 from src.document_info import get_info
 import sys
@@ -11,8 +11,6 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify, send_file, render_template
 from werkzeug.utils import secure_filename
 import datetime
-
-
 
 
 # Load documentai credentials and Cloud project info from environment variables and a JSON file
@@ -62,7 +60,27 @@ def process_pdf():
     file.save(input_pdf_path)
 
     # Determine the action based on the selected function
-    if selected_function == 'process':
+    if selected_function == 'document_text':
+        try:
+            json_name = OUTPUT_DATA_PATH.joinpath(f'{input_pdf_path.stem}')
+            processed_pdf = get_document_text(json_name, OUTPUT_DATA_PATH)
+            print('Found JSON file')
+            return send_file(processed_pdf, as_attachment= True)
+
+        except Exception as e:
+            print('JSON not found. Parsing a new one.', e)
+            json_name = parse_from_pdf(
+                input_pdf_path,
+                PROJECT_ID,
+                PROCESSOR_ID,
+                OUTPUT_DATA_PATH,
+                LOCATION,
+                MIME_TYPE
+            )
+            processed_pdf = get_document_text(json_name, OUTPUT_DATA_PATH)
+            return send_file(processed_pdf, as_attachment= True)
+
+    elif selected_function == 'process':
         json_name = parse_from_pdf(
             input_pdf_path,
             PROJECT_ID,
